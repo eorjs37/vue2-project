@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <h1 id="ele">TEST</h1>
         <img alt="Vue logo" src="./assets/logo.png" />
         <HelloWorld msg="Welcome to Your Vue.js App" />
     </div>
@@ -13,10 +14,23 @@ export default {
     components: {
         HelloWorld,
     },
-    created() {},
+    data() {
+        return {
+            count: 4,
+        };
+    },
+    created() {
+        console.log("############ created ############");
+        console.log("dom api ele : ", document.getElementById("ele"));
+    },
     methods: {},
-    mounted() {},
-    destroyed() {},
+    mounted() {
+        console.log("############ mounted ############");
+        console.log("dom api ele : ", document.getElementById("ele"));
+    },
+    destroyed() {
+        console.log("############ destroyed ############");
+    },
 };
 </script>
 
