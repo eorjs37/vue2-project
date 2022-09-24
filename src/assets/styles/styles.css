@@ -1,0 +1,26 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+  background-color: #eee;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.form-control {
+  padding: 10px 0;
+}
+
+.form-control > .label {
+  display: inline-block;
+  width: 120px;
+  line-height: 2.4em;
+}
+
+.form-control > .input {
+  display: inline-block;
+  width: 200px;
+  height: 24px;
+  margin: 0;
+  padding: 2px;
+}
