@@ -1,7 +1,10 @@
-import apiInstance from "@/utils/axios";
+import apiInstance from '@/utils/axios';
 
-const login = (param) => {
-    return apiInstance.post("/api/ionic/user/login", param);
+/**
+ * @description : 로그인 정보
+ */
+const login = param => {
+  return apiInstance.post('/api/ionic/user/login', param);
 };
 
 export { login };
