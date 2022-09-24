@@ -1,15 +1,22 @@
 <template>
   <div id="app">
     <div class="container">
-      <div class="login-form" id="ele">
-        <div class="form-control"><label class="label" for="id">ID</label> <input class="input" type="text" v-model="id" /></div>
-        <div class="form-control"><label class="label" for="password">PASSWORD</label> <input class="input" type="password" v-model="password" /></div>
-        <div class="form-control"><label class="label" for="passwordConfirm">PASSWORD-2</label> <input class="input" type="password" v-model="passwordConfirm" /></div>
-        <div>
-          <span class="error">{{ errors }}</span>
+      <div>
+        <div class="login-form" id="ele">
+          <div class="form-control"><label class="label" for="id">ID</label> <input class="input" type="text" v-model="id" /></div>
+          <div class="form-control"><label class="label" for="password">PASSWORD</label> <input class="input" type="password" v-model="password" /></div>
+          <div class="form-control"><label class="label" for="passwordConfirm">PASSWORD-2</label> <input class="input" type="password" v-model="passwordConfirm" /></div>
+          <div>
+            <span class="error">{{ errors }}</span>
+          </div>
+        </div>
+
+        <div class="ov-hidden mt-3">
+          <button type="button" class="float-right" @click="openModal">Modal</button>
         </div>
       </div>
     </div>
+    <Modal :visible="modalVisible" @closeModal="onCloseModal"></Modal>
   </div>
 </template>
 
@@ -27,6 +34,7 @@ export default {
       passwordConfirm: '',
       errors: '',
       coffeeList: [],
+      modalVisible: true,
     };
   },
 
@@ -64,6 +72,13 @@ export default {
       } else {
         this.errors = '';
       }
+    },
+    openModal() {
+      this.modalVisible = true;
+    },
+    onCloseModal(value) {
+      console.log('value : ', value);
+      this.modalVisible = value;
     },
   },
 
