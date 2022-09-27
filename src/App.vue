@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import { login } from '@/api/login';
 import { list } from '@/api/list';
 import _ from 'lodash';
 export default {

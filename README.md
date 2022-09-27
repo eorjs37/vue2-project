@@ -43,3 +43,55 @@ npm run serve
 > data 변경될때 사용된다.
 
 ## 부모컴퍼넌트와 자식컴퍼넌트 통신
+
+### props
+
+> 부모에서 자식한테 데이터를 넘겨주고 싶을때 사용된다.(App.vue, Modal.vue 참조)
+
+```html javascript
+//부모컴퍼넌트
+<template>
+  <div id="app">
+    <div class="container">
+      <div class="ov-hidden mt-3">
+        <button type="button" class="float-right" @click="openModal">Modal</button>
+      </div>
+    </div>
+    <Modal :visible="modalVisible" @closeModal="onCloseModal"></Modal>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'App',
+    data() {
+      return {
+        modalVisible: true,
+      };
+    },
+    created() {},
+    updated() {
+      console.log('############ updated ############');
+    },
+
+    destroyed() {
+      console.log('############ destroyed ############');
+    },
+
+    methods: {
+      onCloseModal(value) {
+        console.log('value : ', value);
+        this.modalVisible = value;
+      },
+    },
+  };
+</script>
+```
+
+### emit
+
+> 자식에서 부모한테 데이터를 전달할때 사용된다.(App.vue, Modal.vue 참조)
+
+```html javascript
+
+```
