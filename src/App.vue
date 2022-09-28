@@ -16,6 +16,7 @@
         </div>
       </div>
     </div>
+    <router-view></router-view>
     <Modal :visible="modalVisible" @closeModal="onCloseModal"></Modal>
   </div>
 </template>

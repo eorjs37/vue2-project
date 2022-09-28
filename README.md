@@ -214,3 +214,129 @@ npm run serve
   };
 </script>
 ```
+
+## vue-router
+
+> 화면이동시에 사용된다.(router>index.js, main.js, App.vue, Test.vue 참조)
+
+### 라우터 세팅
+
+```javascript
+//router > index.js
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+
+Vue.use(VueRouter);
+
+export default new VueRouter({
+  mode: 'history', //해쉬값 제거 방식
+  routes: [
+    {
+      path: '/',
+      redirect: '/home',
+    },
+    {
+      path: '/home', //설정 경로
+      component: () => import('@/pages/Home.vue'), // 컴퍼넌트 import
+    },
+    {
+      path: '/test',
+      component: () => import('@/pages/Test.vue'),
+    },
+  ],
+});
+```
+
+```javascript
+//main.js
+import Vue from 'vue';
+import App from './App.vue';
+import Modal from '@/components/Modal';
+
+//router
+import router from '@/router/index';
+
+Vue.config.productionTip = false;
+
+Vue.component('Modal', Modal);
+
+new Vue({
+  router, //router추가
+  render: h => h(App),
+}).$mount('#app');
+```
+
+```html javascript
+<!-- App.vue -->
+<template>
+  <div id="app">
+    <!-- 라우터뷰 추가 -->
+    <router-view></router-view>
+  </div>
+</template>
+
+<script></script>
+
+<style></style>
+```
+
+#### 경로에 파라미터가 있을 경우
+
+```javascript
+// router > index.js
+
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+
+Vue.use(VueRouter);
+
+export default new VueRouter({
+  mode: 'history', //해쉬값 제거 방식
+  routes: [
+    {
+      path: '/',
+      redirect: '/home',
+    },
+    {
+      path: '/home',
+      component: () => import('@/pages/Home.vue'),
+    },
+    {
+      //파라임터가 필요한 경우 아래처럼 :파라미터명(ex. :id 으로 작성한다.)
+      path: '/example1/:id',
+      component: () => import('@/pages/Example1.vue'),
+    },
+    {
+      path: '/test',
+      component: () => import('@/pages/Test.vue'),
+    },
+  ],
+});
+```
+
+```html javascript
+<!-- Example1.vue -->
+<template>
+  <div class="container example">
+    <h1>Example.vue</h1>
+  </div>
+</template>
+
+<script>
+  export default {
+    mounted() {
+      //this.$route를 통해 params추출
+      const { params } = this.$route;
+      //params를 통해 id 추출
+      const { id } = params;
+      console.log('id : ', id);
+    },
+  };
+</script>
+
+<style>
+  .example {
+    background-color: cadetblue;
+  }
+</style>
+```
