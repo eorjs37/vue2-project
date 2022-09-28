@@ -33,7 +33,7 @@ export default {
       passwordConfirm: '',
       errors: '',
       coffeeList: [],
-      modalVisible: true,
+      modalVisible: false,
     };
   },
 
