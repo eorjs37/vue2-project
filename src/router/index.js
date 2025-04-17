@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 export default new VueRouter({
-  mode: 'history', //해쉬값 제거 방식
+  mode: 'history', //해쉬값 제거 방식1
   routes: [
     {
       path: '/',
