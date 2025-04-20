@@ -8,6 +8,9 @@ class TaskQueue {
     this.queue.push(task);
     this.runNext();
   }
+  isLast() {
+    return this.queue.length === 0;
+  }
 
   async runNext() {
     if (this.isRunning || this.queue.length === 0) return;
@@ -15,6 +18,7 @@ class TaskQueue {
     this.isRunning = true;
 
     const task = this.queue.shift();
+
     if (task) {
       try {
         await task();
