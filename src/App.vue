@@ -158,6 +158,7 @@ export default {
     playVideo(src) {
       return new Promise(resolve => {
         const video = this.$refs.videoPlayer;
+        // resolve 함수 담기
         this.currentResolve = resolve;
 
         video.src = src;
