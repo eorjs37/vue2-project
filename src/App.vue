@@ -13,8 +13,8 @@
 import _ from 'lodash';
 import { taskQueue } from './utils/taskQueue';
 import { dummyVideoList } from './api/dummyApi';
-import Hls from 'hls.js';
 import { fadeOut, fadeIn } from './api/videoControl';
+import streamingVideo from '@/utils/streamingvideo';
 export default {
   name: 'App',
   data() {
@@ -99,7 +99,9 @@ export default {
   /* ######################################### life cycle ######################################### */
   created() {},
   async mounted() {
+    streamingVideo.setVideo(this.$refs.streamingvideo);
     this.setHls();
+
     //1.브랜드 음원 등록
     //2.반복문을 통해 첫번째이면 fadeOut 마지막이면 fadeIn
     //3.fadeOut 도중에 중지하면? fadeOut을 멈추고 중지처리 그리고 브랜드음원은 재생되지 않는다
@@ -144,16 +146,14 @@ export default {
       });
     },
     setHls() {
-      if (this.hls) {
-        this.hls.destroy();
-      }
-      this.hls = new Hls(this.config);
-      this.hls.loadSource(this.hlsvideosrc);
-      this.hls.attachMedia(this.$refs.streamingvideo);
-      this.$refs.streamingvideo.muted = false;
-      this.hls.startLoad(-1);
-
-      this.$refs.streamingvideo.play();
+      streamingVideo
+        .setHls(this.hlsvideosrc)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log('error ; ', err);
+        });
     },
     playVideo(src) {
       return new Promise(resolve => {
