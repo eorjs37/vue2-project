@@ -4,6 +4,7 @@
     <video hidden ref="videoPlayer" @ended="onVideoEnded"></video>
     <button @click="setHls">시작</button>
     <button @click="dummyBrandStart">브랜드음원 순차 시작</button>
+    <button @click="duummyBrandTimeCurationStart">브랜드음원 && 시간별큐레이션(가짜)순차 시작</button>
     <input type="range" :value="videoVolume * 100" />
     <Modal :visible="modalVisible" @closeModal="onCloseModal"></Modal>
   </div>
@@ -92,7 +93,8 @@ export default {
           },
         },
       },
-      videoList: ['https://daegeon-everybody.s3.ap-northeast-2.amazonaws.com/video/BigBuckBunny.mp4', 'https://daegeon-everybody.s3.ap-northeast-2.amazonaws.com/video/ElephantsDream.mp4', 'https://daegeon-everybody.s3.ap-northeast-2.amazonaws.com/video/ForBiggerBlazes.mp4'],
+      videoList: ['https://daegeon-everybody.s3.ap-northeast-2.amazonaws.com/video/ForBiggerBlazes.mp4'],
+      // 'https://daegeon-everybody.s3.ap-northeast-2.amazonaws.com/video/BigBuckBunny.mp4', 'https://daegeon-everybody.s3.ap-northeast-2.amazonaws.com/video/ElephantsDream.mp4',
     };
   },
 
@@ -145,6 +147,32 @@ export default {
         }
       });
     },
+    async duummyBrandTimeCurationStart() {
+      try {
+        // 브랜드 음원
+        const res = await dummyVideoList();
+        res.forEach((item, index) => {
+          const { id, url } = item;
+          taskQueue.add(async () => {
+            await fadeOut(this.$refs.streamingvideo, 5000);
+            await this.playVideo(url);
+          });
+        });
+
+        // 시간별 큐레이션
+        taskQueue.add(async () => {
+          console.log('before 5000ms');
+
+          const isSucces = await this.someThingMethod();
+          console.log('after 5000ms' + isSucces);
+
+          await fadeIn(this.$refs.streamingvideo, 5000, 1);
+          console.log('end');
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
     setHls() {
       streamingVideo
         .setHls(this.hlsvideosrc)
@@ -154,6 +182,13 @@ export default {
         .catch(err => {
           console.log('error ; ', err);
         });
+    },
+    someThingMethod() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve('success');
+        }, 5000);
+      });
     },
     playVideo(src) {
       return new Promise(resolve => {
